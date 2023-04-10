@@ -1,0 +1,71 @@
+# List of apt packages
+gedit
+golang-go
+seclists
+curl
+dnsrecon
+enum4linux
+feroxbuster
+gobuster
+impacket-scripts
+nbtscan
+nikto
+nmap
+onesixtyone
+oscanner
+redis-tools
+smbclient
+smbmap
+snmpwalk
+sslscan
+svwar
+tnscmd10g
+whatweb
+wkhtmltopdf
+htop
+xrdp
+----
+
+# List of go installer URLs
+github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+github.com/projectdiscovery/katana/cmd/katana@latest
+github.com/projectdiscovery/httpx/cmd/httpx@latest
+github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
+github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+github.com/projectdiscovery/proxify/cmd/proxify@latest
+----
+
+# List of deb installer URLs
+https://download.sublimetext.com/sublime-text_build-4143_amd64.deb
+----
+
+# List of GitHub repository URLs
+https://github.com/t3l3machus/hoaxshell.git
+https://github.com/t3l3machus/Villain.git
+https://github.com/s0md3v/XSStrike.git
+https://github.com/hum4nG0D/simple-HTTPS-server.git
+https://github.com/hum4nG0D/lfi-fuzz.git
+https://github.com/killmongar1996/sqlTinj.git
+https://github.com/enjoiz/XXEinjector.git
+https://github.com/shelld3v/JSshell.git
+https://github.com/swisskyrepo/GraphQLmap.git
+https://github.com/21y4d/nmapAutomator.git
+https://github.com/cyberark/MITM_Intercept.git
+https://github.com/jrmdev/mitm_relay.git
+https://github.com/9emin1/charlotte.git
+----
+
+# List of Python modules
+requests
+pyftpdlib
+uploadserver
+virtualenv
+git+https://github.com/Tib3rius/AutoRecon.git
+----
+
+# List of file download URLs
+https://github.com/assetnote/kiterunner/releases/download/v1.0.2/kiterunner_1.0.2_linux_amd64.tar.gz
+https://wordlists-cdn.assetnote.io/data/kiterunner/routes-large.kite.tar.gz
+https://wordlists-cdn.assetnote.io/data/kiterunner/routes-small.kite.tar.gz
+https://github.com/gchq/CyberChef/releases/download/v10.4.0/CyberChef_v10.4.0.zip
+https://github.com/projectdiscovery/interactsh/releases/download/v1.1.2/interactsh-server_1.1.2_linux_amd64.zip
