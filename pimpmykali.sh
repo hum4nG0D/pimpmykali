@@ -3,21 +3,24 @@
 # 
 # Pre-requisite:
 # Add the user to sudoer group and set nopassword for sudo.
-# usermod -aG sudo username
-# echo '%sudo ALL=(ALL:ALL) NOPASSWD:ALL' | sudo EDITOR=tee visudo -f /etc/sudoers.d/dist-build-sudo-passwordless >/dev/null
+# 1. usermod -aG sudo username
+# 2. echo '%sudo ALL=(ALL:ALL) NOPASSWD:ALL' | sudo EDITOR=tee visudo -f /etc/sudoers.d/dist-build-sudo-passwordless >/dev/null
 #
 
-# Define color codes
+yellow='\033[0;33m'
+orange='\033[0;33m'
+red='\033[0;31m'
+cyan='\033[0;36m'
 blue='\033[0;34m'
 green='\033[0;32m'
 reset='\033[0m'
 
-echo -e "${blue}pimpmykali v0.1${reset}\n"
-echo -e "${blue}Start of a new adventure...\n${reset}"
+echo -e "${yellow} pimpmykali v0.1 \n${reset}"
+echo -e "${cyan}Start of a new adventure...\n\n${reset}"
 
 user="kali"
 if ! sudo chown -R $user:$user /opt; then
-  echo "[-] Error: Failed to chown /opt dir." >&2
+  echo "${red}[-] Error: Failed to chown /opt dir.${reset}" >&2
   exit 1
 fi
 
@@ -33,41 +36,15 @@ echo "${green}[+] Successfully downloaded wallpaper to /opt/pimpmykali.${reset}"
 
 
 # List of packages to install #################################################################
-packages=(
-    gedit
-    golang-go
-    seclists
-    curl
-    dnsrecon
-    enum4linux
-    feroxbuster
-    gobuster
-    impacket-scripts
-    nbtscan
-    nikto
-    nmap
-    onesixtyone
-    oscanner
-    redis-tools
-    smbclient
-    smbmap
-    snmpwalk
-    sslscan
-    svwar
-    tnscmd10g
-    whatweb
-    wkhtmltopdf
-    htop
-    xrdp
-)
+packages=(gedit golang-go seclists curl dnsrecon enum4linux feroxbuster gobuster impacket-scripts nbtscan nikto nmap onesixtyone oscanner redis-tools smbclient smbmap snmpwalk sslscan svwar tnscmd10g whatweb wkhtmltopdf htop xrdp git build-essential apt-utils cmake libfontconfig1 libglu1-mesa-dev libgtest-dev libspdlog-dev libboost-all-dev libncurses5-dev libgdbm-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev libbz2-dev mesa-common-dev qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools libqt5websockets5 libqt5websockets5-dev qtdeclarative5-dev golang-go qtbase5-dev libqt5websockets5-dev libspdlog-dev python3-dev libboost-all-dev mingw-w64 nasm)
 
-echo "[i] Updating Apt package list..."
+echo "${blue}[i] Updating Apt package list...${reset}"
 if ! sudo apt update; then
-  echo "[-] Error: Failed to update Apt package list." >&2
+  echo "${red}[-] Error: Failed to update Apt package list.${reset}" >&2
   exit 1
 fi
 
-echo -e "[+] Apt package list updated successfully.\n"
+echo -e "${green}[+] Apt package list updated successfully.\n${reset}"
 
 for package in "${packages[@]}"
 do
@@ -76,13 +53,14 @@ do
 done
 
 sudo apt update
-echo -e "${green}[+] Installation of apt packages completed.\n${reset}"
+echo -e "${green}[+] Installation of apt packages completed.\n\n${reset}"
 
 
 # List of repositories to clone ###############################################################
 repositories=(
     https://github.com/t3l3machus/hoaxshell.git
     https://github.com/t3l3machus/Villain.git
+    https://github.com/HavocFramework/Havoc.git
     https://github.com/s0md3v/XSStrike.git
     https://github.com/hum4nG0D/simple-HTTPS-server.git
     https://github.com/hum4nG0D/lfi-fuzz.git
@@ -99,7 +77,6 @@ repositories=(
 
 for repository in "${repositories[@]}"
 do
-  # Extract repository name from URL
   repo_name="${repository##*/}"
   repo_name="${repo_name%.*}"
   
@@ -116,13 +93,14 @@ do
   then
     echo "${blue}[i] Installing requirements for $repo_name...${reset}"
     python3 -m pip install -r "/opt/$repo_name/requirements.txt"
-    echo "${green}[+] Successfully installed requirements for $repo_name.${reset}"
+    echo -e "${green}[+] Successfully installed requirements for $repo_name.${reset}"
   fi
 done
 
 
 # List of files to download ###################################################################
 urls=(
+    https://download.sublimetext.com/sublime-text_build-4143_amd64.deb
     https://github.com/assetnote/kiterunner/releases/download/v1.0.2/kiterunner_1.0.2_linux_amd64.tar.gz
     https://wordlists-cdn.assetnote.io/data/kiterunner/routes-large.kite.tar.gz
     https://wordlists-cdn.assetnote.io/data/kiterunner/routes-small.kite.tar.gz
@@ -137,17 +115,46 @@ urls=(
     https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/metasploit/peass.rb
 )
 
-# Loop through URLs
 for url in "${urls[@]}"
 do
-  # Extract filename from URL
   filename="${url##*/}"
   
-  # Download file with curl
-  echo "[i] Downloading $filename..."
+  echo "${blue}[i] Downloading $filename...${reset}"
   if ! curl -o "$filename" "$url"; then
-    echo "[-] Error: Failed to download $filename." >&2
+    echo "${red}[-] Error: Failed to download $filename.${reset}" >&2
   fi
+done
+
+# List of python modules ######################################################################
+modules=(
+    requests
+    pyftpdlib
+    uploadserver
+    virtualenv
+    git+https://github.com/Tib3rius/AutoRecon.git
+)
+
+for module in "${modules[@]}"
+do
+  python3 -m pip install "$module"
+  echo "${green}[+] Successfully installed $module.${reset}"
+done
+
+
+# List of go modules #########################################################################
+go_packages=(
+    github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+    github.com/projectdiscovery/katana/cmd/katana@latest
+    github.com/projectdiscovery/httpx/cmd/httpx@latest
+    github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
+    github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+    github.com/projectdiscovery/proxify/cmd/proxify@latest
+)
+
+for go_package in "${go_packages[@]}"
+do
+  go install "$go_package"
+  echo "${green}[+] Successfully installed $go_package.${reset}"
 done
 
 
@@ -157,3 +164,6 @@ python3 -m virtualenv ~/py2
 echo "${green}[+] Successfully created py2 virtualenv.${reset}"
 python3 -m virtualenv --python=/usr/bin/python2 ~/py2
 echo "${green}[+] Successfully set python2 for py2.${reset}"
+
+
+###############################################################################################
